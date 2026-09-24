@@ -1,3 +1,9 @@
+loadstring([[
+    function LPH_NO_VIRTUALIZE(f) return f end
+    function LPH_JIT_MAX(f) return f end
+    function LPH_JIT(f) return f end
+    function LPH_ENCFUNC(f) return f end
+]])();
 
 eli_inext = function(t, i)
     i = i + 1;
