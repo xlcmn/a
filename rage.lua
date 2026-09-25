@@ -1350,10 +1350,10 @@ function Library:SetGradientText(Label, Text)
     Label.Text = Text or '';
     Label.TextColor3 = Color3.new(1, 1, 1);
 
-    local gradient = Label:FindFirstChild('ElisiumTextGradient');
+    local gradient = Label:FindFirstChild('ariseTextGradient');
     if not gradient then
         gradient = Library:Create('UIGradient', {
-            Name = 'ElisiumTextGradient';
+            Name = 'ariseTextGradient';
             Parent = Label;
         });
         Library:RegisterGradientLabel(Label);
@@ -1371,7 +1371,7 @@ function Library:UpdateAllGradientTexts()
         if not label or not label.Parent then
             table.remove(Library.GradientLabels, idx);
         else
-            local gradient = label:FindFirstChild('ElisiumTextGradient');
+            local gradient = label:FindFirstChild('ariseTextGradient');
             if gradient then
                 gradient.Color = sequence;
             end;
@@ -1425,7 +1425,7 @@ function Library:SetAccentTitle(Label, Title, AccentPart)
     Title = Title or '';
     AccentPart = AccentPart or '';
 
-    local gradient = Label:FindFirstChild('ElisiumTextGradient');
+    local gradient = Label:FindFirstChild('ariseTextGradient');
     if gradient then
         gradient:Destroy();
     end;
@@ -1565,14 +1565,14 @@ function Library:LinkWindowShadow() end;
 
 function Library:UpdateMenuBlur()
     local lighting = game:GetService('Lighting');
-    local blur = lighting:FindFirstChild('ElisiumMenuBlur');
+    local blur = lighting:FindFirstChild('ariseMenuBlur');
     local enabled = Toggles and Toggles.MenuBlurToggle and Toggles.MenuBlurToggle.Value;
     local shouldBlur = enabled and Library.MenuOpen;
 
     if shouldBlur then
         if not blur then
             blur = Instance.new('BlurEffect');
-            blur.Name = 'ElisiumMenuBlur';
+            blur.Name = 'ariseMenuBlur';
             blur.Size = 12;
             blur.Parent = lighting;
         end;
@@ -7000,7 +7000,7 @@ task.spawn(function()
     while task.wait(0.5) do
         if Library.Watermark and Library.Watermark.Visible then
             local wm = getgenv().arise_wm or {};
-            local parts = { "Elisium.lol" };
+            local parts = { "arise.cc" };
             if wm.fps ~= false then
                 parts[#parts + 1] = string.format("%d fps", math.floor(fps + 0.5));
             end;
@@ -7136,7 +7136,7 @@ function Library:InitSoundAssets()
         local ToggleAsset = self:EnsureSoundFile(Folder, 'toggle.mp3', SOUND_URLS.Toggle);
         if ToggleAsset then
             self.ToggleSound = Instance.new('Sound');
-            self.ToggleSound.Name = 'ElisiumToggleSound';
+            self.ToggleSound.Name = 'ariseToggleSound';
             self.ToggleSound.SoundId = ToggleAsset;
             self.ToggleSound.Volume = self.ToggleSoundVolume;
             self.ToggleSound.PlaybackSpeed = self.ToggleSoundSpeed;
@@ -7148,7 +7148,7 @@ function Library:InitSoundAssets()
         local NotifyAsset = self:EnsureSoundFile(Folder, 'notify.mp3', SOUND_URLS.Notification);
         if NotifyAsset then
             self.NotificationSound = Instance.new('Sound');
-            self.NotificationSound.Name = 'ElisiumNotificationSound';
+            self.NotificationSound.Name = 'ariseNotificationSound';
             self.NotificationSound.SoundId = NotifyAsset;
             self.NotificationSound.Volume = self.NotificationSoundVolume;
             self.NotificationSound.PlaybackSpeed = self.NotificationSoundSpeed;
@@ -7160,7 +7160,7 @@ function Library:InitSoundAssets()
         local SliderAsset = self:EnsureSoundFile(Folder, 'slider.mp3', SOUND_URLS.Slider);
         if SliderAsset then
             self.SliderSound = Instance.new('Sound');
-            self.SliderSound.Name = 'ElisiumSliderSound';
+            self.SliderSound.Name = 'ariseSliderSound';
             self.SliderSound.SoundId = SliderAsset;
             self.SliderSound.Volume = self.SliderSoundVolume;
             self.SliderSound.PlaybackSpeed = self.SliderSoundSpeed;
@@ -7372,8 +7372,8 @@ function Library:CreateWindow(...)
         local saved = getgenv().arise_ui_size;
         if not saved then
             pcall(function()
-                if isfile and isfile('Elisium/ui_size.txt') then
-                    local d = tostring(readfile('Elisium/ui_size.txt'));
+                if isfile and isfile('arise/ui_size.txt') then
+                    local d = tostring(readfile('arise/ui_size.txt'));
                     local x, y = d:match('(%d+),(%d+)');
                     if x and y then saved = { tonumber(x), tonumber(y) } end;
                 end;
@@ -8431,7 +8431,7 @@ local ThemeManager = {} do
 	end;
 
 	function ThemeManager:CreateAppearanceManager(groupbox, skipLoadDefault)
-		groupbox:AddLabel('Accent Color'):AddColorPicker('AccentColor', { Default = self.Library.AccentColor });
+		groupbox:AddLabel('Accent Color'):AddColorPicker('AccentColor', { Default = arise });
 
 		groupbox:AddToggle('MenuBlurToggle', {
 			Text = 'Menu Blur',
@@ -10498,8 +10498,8 @@ end
 
 do
     local forced = false;
-    if not Library.__ElisiumDragHooked and type(Library.MouseIsOverFrame) == "function" then
-        Library.__ElisiumDragHooked = true;
+    if not Library.__ariseDragHooked and type(Library.MouseIsOverFrame) == "function" then
+        Library.__ariseDragHooked = true;
         local old_mouse_over = Library.MouseIsOverFrame;
         Library.MouseIsOverFrame = function(self, frame, input)
             if not Library.MenuOpen and frame == Library.KeybindFrame then
@@ -12973,7 +12973,7 @@ do
             ["Twighlight"] = { SkyboxBk = "rbxassetid://264908339", SkyboxDn = "rbxassetid://264907909", SkyboxFt = "rbxassetid://264909420", SkyboxLf = "rbxassetid://264909758", SkyboxRt = "rbxassetid://264908886", SkyboxUp = "rbxassetid://264907379" },
             ["Vaporwave"] = { SkyboxBk = "rbxassetid://1417494030", SkyboxDn = "rbxassetid://1417494146", SkyboxFt = "rbxassetid://1417494253", SkyboxLf = "rbxassetid://1417494402", SkyboxRt = "rbxassetid://1417494499", SkyboxUp = "rbxassetid://1417494643" },
             ["Vivid Skies"] = { SkyboxBk = "rbxassetid://271042516", SkyboxDn = "rbxassetid://271077243", SkyboxFt = "rbxassetid://271042556", SkyboxLf = "rbxassetid://271042310", SkyboxRt = "rbxassetid://271042467", SkyboxUp = "rbxassetid://271077958" },
-            ["Elisium Sky"] = { SkyboxBk = "rbxassetid://1898724755", SkyboxDn = "rbxassetid://1898727189", SkyboxFt = "rbxassetid://1898722814", SkyboxLf = "rbxassetid://1898729298", SkyboxRt = "rbxassetid://1898741025", SkyboxUp = "rbxassetid://1898736761" },
+            ["arise Sky"] = { SkyboxBk = "rbxassetid://1898724755", SkyboxDn = "rbxassetid://1898727189", SkyboxFt = "rbxassetid://1898722814", SkyboxLf = "rbxassetid://1898729298", SkyboxRt = "rbxassetid://1898741025", SkyboxUp = "rbxassetid://1898736761" },
         };
 
         self.elements = {};
@@ -20690,8 +20690,8 @@ do
         if not Area then return end;
 
         for _, Outer in eli_ipairs(Area:GetChildren()) do
-            if Outer:IsA("GuiObject") and not Outer:GetAttribute("ElisiumStyled") then
-                Outer:SetAttribute("ElisiumStyled", true);
+            if Outer:IsA("GuiObject") and not Outer:GetAttribute("ariseStyled") then
+                Outer:SetAttribute("ariseStyled", true);
 
                 if NConfig.force_color and NConfig.color then
                     for _, Child in eli_ipairs(Outer:GetDescendants()) do
@@ -20721,9 +20721,9 @@ do
         end;
     end;
 
-    if not Library.__ElisiumNotifyHooked then
-        Library.__ElisiumNotifyHooked = true;
-        Library.__ElisiumOldNotify = Library.Notify;
+    if not Library.__ariseNotifyHooked then
+        Library.__ariseNotifyHooked = true;
+        Library.__ariseOldNotify = Library.Notify;
 
         function Library:Notify(...)
             if getgenv().silent_load then
@@ -20735,7 +20735,7 @@ do
             end;
 
             ApplyNotifySettings();
-            local Data = Library.__ElisiumOldNotify(self, ...);
+            local Data = Library.__ariseOldNotify(self, ...);
             task.defer(StyleNotification);
             return Data;
         end;
@@ -21218,7 +21218,7 @@ end)()
         end;
         getgenv().arise_toggle_gui = toggleGui;
         local btn = Library:Create('TextButton', {
-            Name = 'ElisiumMobileToggle';
+            Name = 'ariseMobileToggle';
             Size = UDim2.fromOffset(92, 24);
             Position = UDim2.fromOffset(12, 12);
             BackgroundColor3 = Library.MainColor;
@@ -21250,10 +21250,10 @@ end)()
 
     pcall(function()
         local holder = Window and Window.Holder;
-        if not holder or holder:FindFirstChild('ElisiumMainResizer') then return end;
+        if not holder or holder:FindFirstChild('ariseMainResizer') then return end;
         local uis = game:GetService('UserInputService');
         local handle = Instance.new('Frame');
-        handle.Name = 'ElisiumMainResizer';
+        handle.Name = 'ariseMainResizer';
         handle.AnchorPoint = Vector2.new(1, 1);
         handle.Position = UDim2.new(1, 0, 1, 0);
         handle.Size = UDim2.fromOffset(12, 12);
