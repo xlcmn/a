@@ -186,7 +186,7 @@ pcall(function()
         return original(self, key);
     end)));
 end);
-getgenv().elisium_set_antidetect = function(v)
+getgenv().arise_set_antidetect = function(v)
     antidetect = v and true or false;
 end;
 
@@ -331,7 +331,7 @@ local CUSTOM_UI_FONTS = {
     },
     ['Tahoma'] = {
         FontFile = 'Tahoma.font',
-        AltFontFiles = { 'elisium/Tahoma.font', 'library/Tahoma.font', 'Tahoma.ttf', 'library/Tahoma.ttf' },
+        AltFontFiles = { 'arise/Tahoma.font', 'library/Tahoma.font', 'Tahoma.ttf', 'library/Tahoma.ttf' },
     },
 };
 
@@ -6960,7 +6960,7 @@ function Library:SetWatermark(Text)
     Library:SetAccentTitle(Library.WatermarkText, rawText, Library.WatermarkAccentPart or '.lol');
 end;
 
-getgenv().elisium_wm = getgenv().elisium_wm or { ping = true, executor = false, fps = true, time = true };
+getgenv().arise_wm = getgenv().arise_wm or { ping = true, executor = false, fps = true, time = true };
 task.spawn(function()
     local fps = 60;
     local execName = nil;
@@ -6999,7 +6999,7 @@ task.spawn(function()
 
     while task.wait(0.5) do
         if Library.Watermark and Library.Watermark.Visible then
-            local wm = getgenv().elisium_wm or {};
+            local wm = getgenv().arise_wm or {};
             local parts = { "Elisium.lol" };
             if wm.fps ~= false then
                 parts[#parts + 1] = string.format("%d fps", math.floor(fps + 0.5));
@@ -7067,7 +7067,7 @@ function Library:SaveSoundSettings()
         return;
     end;
 
-    local SettingsPath = (self.SoundSettingsFolder or 'elisium') .. '/settings/sounds.json';
+    local SettingsPath = (self.SoundSettingsFolder or 'arise') .. '/settings/sounds.json';
     local Data = {
         ToggleSoundEnabled = self.ToggleSoundEnabled;
         NotificationSoundEnabled = self.NotificationSoundEnabled;
@@ -7102,7 +7102,7 @@ function Library:InitSoundSettings(Folder)
         SliderSoundSpeed = 1;
     };
 
-    self.SoundSettingsFolder = Folder or 'elisium';
+    self.SoundSettingsFolder = Folder or 'arise';
     local SettingsPath = self.SoundSettingsFolder .. '/settings/sounds.json';
     local Settings = Defaults;
 
@@ -7130,7 +7130,7 @@ function Library:InitSoundSettings(Folder)
 end;
 
 function Library:InitSoundAssets()
-    local Folder = self.SoundSettingsFolder or 'elisium';
+    local Folder = self.SoundSettingsFolder or 'arise';
 
     if not self.ToggleSound then
         local ToggleAsset = self:EnsureSoundFile(Folder, 'toggle.mp3', SOUND_URLS.Toggle);
@@ -7369,7 +7369,7 @@ function Library:CreateWindow(...)
     if typeof(Config.Size) ~= 'UDim2' then Config.Size = UDim2.fromOffset(460, 400) end
 
     do
-        local saved = getgenv().elisium_ui_size;
+        local saved = getgenv().arise_ui_size;
         if not saved then
             pcall(function()
                 if isfile and isfile('Elisium/ui_size.txt') then
@@ -7431,11 +7431,11 @@ function Library:CreateWindow(...)
         Library.MainWindowOuter = Outer;
         local function persistSize()
             local s = Outer.AbsoluteSize;
-            getgenv().elisium_ui_size = { math.floor(s.X), math.floor(s.Y) };
+            getgenv().arise_ui_size = { math.floor(s.X), math.floor(s.Y) };
             pcall(function()
                 if writefile then
-                    if makefolder and isfolder and not isfolder('Elisium') then makefolder('Elisium') end;
-                    writefile('Elisium/ui_size.txt', math.floor(s.X) .. ',' .. math.floor(s.Y));
+                    if makefolder and isfolder and not isfolder('Arise') then makefolder('Arise') end;
+                    writefile('arise/ui_size.txt', math.floor(s.X) .. ',' .. math.floor(s.Y));
                 end;
             end);
         end;
@@ -7526,7 +7526,7 @@ function Library:CreateWindow(...)
     local AccentPart = Config.AccentPart or '.lol';
 
     local function UpdateTitle()
-        local rawTitle = Config.Title or "Elisium.lol";
+        local rawTitle = Config.Title or "arise.cc";
         Library:SetAccentTitle(WindowLabel, rawTitle, AccentPart);
     end;
 
@@ -8282,9 +8282,9 @@ local ThemeManager = {} do
 	ThemeManager.Folder = 'sugarpop';
 
 	ThemeManager.Library = nil;
-	ThemeManager.DefaultTheme = 'elisium';
+	ThemeManager.DefaultTheme = 'arise';
 	ThemeManager.BuiltInThemes = {
-		['Default'] 		= { 1, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"181818","AccentColor":"4a9eff","SelectedTabColor":"1c1c1c","BackgroundColor":"141414","OutlineColor":"262626","GradientColor":"1a3a5c","ShadowColor":"000000"}') },
+		['Default'] 		= { 1, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"181818","AccentColor":"0c5fa8","SelectedTabColor":"1c1c1c","BackgroundColor":"141414","OutlineColor":"262626","GradientColor":"1a3a5c","ShadowColor":"000000"}') },
 		['GameSense'] 		= { 2, httpService:JSONDecode('{"FontColor":"919191","MainColor":"101010","AccentColor":"9CB819","SelectedTabColor":"101010","BackgroundColor":"111111","OutlineColor":"2D2D2D","GradientColor":"242B05"}') },
 		['Comet.pub'] 		= { 3, httpService:JSONDecode('{"FontColor":"5E5E5E","MainColor":"0F0F0F","AccentColor":"5D589D","SelectedTabColor":"1a191d","BackgroundColor":"0F0F0F","OutlineColor":"191919","GradientColor":"2b284e"}') },
 		['Tokyohook.cc'] 	= { 4, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"191925","AccentColor":"6759b3","SelectedTabColor":"1a1a29","BackgroundColor":"16161f","OutlineColor":"433e58","GradientColor":"2f285c"}') },
@@ -8348,7 +8348,7 @@ local ThemeManager = {} do
 		['nebula.cc'] 	    = { 62, httpService:JSONDecode('{"FontColor":"e8eaf6","MainColor":"151728","AccentColor":"7c4dff","SelectedTabColor":"0d0e19","BackgroundColor":"151728","OutlineColor":"2c3054","GradientColor":"311b92"}') },
 		['eclipse.dev'] 	= { 63, httpService:JSONDecode('{"FontColor":"ffebee","MainColor":"1c1a1a","AccentColor":"ff3d00","SelectedTabColor":"121111","BackgroundColor":"1c1a1a","OutlineColor":"363232","GradientColor":"731a00"}') },
 		['aurora.win'] 	    = { 64, httpService:JSONDecode('{"FontColor":"e8f5e9","MainColor":"11221a","AccentColor":"00e676","SelectedTabColor":"0b1611","BackgroundColor":"11221a","OutlineColor":"224434","GradientColor":"005427"}') },
-		['elisium'] 	    = { 65, httpService:JSONDecode('{"FontColor":"e0d4d6","MainColor":"121212","AccentColor":"a65d67","SelectedTabColor":"0a0a0a","BackgroundColor":"0a0a0a","OutlineColor":"000000","GradientColor":"6b3038"}') },
+		['arise'] 	        = { 65, httpService:JSONDecode('{"FontColor":"e0d4d6","MainColor":"121212","AccentColor":"0c5fa8","SelectedTabColor":"0a0a0a","BackgroundColor":"0a0a0a","OutlineColor":"000000","GradientColor":"6b3038"}') },
 	};
 
 	function ThemeManager:ApplyTheme(theme)
@@ -8409,7 +8409,7 @@ local ThemeManager = {} do
 	end;
 
 	function ThemeManager:LoadDefault()
-		local theme = self.DefaultTheme or 'elisium';
+		local theme = self.DefaultTheme or 'arise';
 		local content = isfile(self.Folder .. '/themes/default.txt') and readfile(self.Folder .. '/themes/default.txt');
 
 		if content then
@@ -8500,7 +8500,7 @@ local ThemeManager = {} do
 
 		table.sort(ThemesArray, function(a, b) return self.BuiltInThemes[a][1] < self.BuiltInThemes[b][1] end);
 
-		groupbox:AddDropdown('ThemeManager_ThemeList', { Text = 'Presets', Values = ThemesArray, Default = 'elisium' });
+		groupbox:AddDropdown('ThemeManager_ThemeList', { Text = 'Presets', Values = ThemesArray, Default = 'arise' });
 
 		Options.ThemeManager_ThemeList:OnChanged(function()
 			self:ApplyTheme(Options.ThemeManager_ThemeList.Value);
@@ -8736,7 +8736,7 @@ local SaveManager = (function()
     local httpService = game:GetService('HttpService');
     local SaveManager = {};
 
-    SaveManager.Folder = 'elisium/rivals';
+    SaveManager.Folder = 'arise/rivals';
     SaveManager.Ignore = {};
 
     SaveManager.Parser = {
@@ -8889,7 +8889,7 @@ local SaveManager = (function()
 
         do
             data.widgets = {};
-            local ws = getgenv().elisium_widgets;
+            local ws = getgenv().arise_widgets;
             if type(ws) == 'table' then
                 for wname, overlay in next, ws do
                     if overlay and overlay.Outer then
@@ -8960,7 +8960,7 @@ local SaveManager = (function()
         end;
 
         if type(decoded.widgets) == 'table' then
-            local ws = getgenv().elisium_widgets;
+            local ws = getgenv().arise_widgets;
             if type(ws) == 'table' then
                 for wname, pos in next, decoded.widgets do
                     local overlay = ws[wname];
@@ -9164,7 +9164,7 @@ local Toggles = Library.Toggles;
 getgenv().silent_load = getgenv().silent_load or false;
 getgenv().auto_load_enable = getgenv().auto_load_enable or false;
 local Window = Library:CreateWindow({
-    Title = 'Elisium.lol - https://elisium.lol/ [KEYLESS]',
+    Title = 'arise.cc / hvh rivals',
     AutoShow = false,
     BackgroundImage = "",
     SubTitle = "Rivals",
@@ -9186,7 +9186,7 @@ Library:OnUnload(function()
     pcall(function()
         GLOBAL_TROVE:Destroy();
     end);
-    getgenv().elisium_loaded = false;
+    getgenv().arise_loaded = false;
     getgenv().Library.Unloaded = true;
     getgenv().Library = nil;
 end);
@@ -9208,8 +9208,8 @@ local fonts = getgenv().fonts;
 
 task.spawn(function()
     for name, suffix in font_files do
-        local ttf_path = "elisium/rivals/fonts/" .. suffix;
-        local font_path = "elisium/rivals/fonts/" .. name .. ".font";
+        local ttf_path = "arise/rivals/fonts/" .. suffix;
+        local font_path = "arise/rivals/fonts/" .. name .. ".font";
 
         if not isfile(ttf_path) then
             local okFont, font_data = pcall(game.HttpGet, game, "https://github.com/i77lhm/storage/raw/refs/heads/main/fonts/" .. suffix);
@@ -9305,7 +9305,7 @@ local Tabs = {
     ['UI Settings'] = Window:AddTab('settings'),
 };
 
-getgenv().elisium = {
+getgenv().arise = {
     optimizations = {
         no_particles = false,
         no_shadows = false,
@@ -9389,7 +9389,7 @@ getgenv().elisium = {
         shimmer = false,
         shimmer_speed = 4,
         text_enable = false,
-        text_content = "elisium",
+        text_content = "arise",
         text_font = "Plex",
         text_size = 16,
         text_offset = 18,
@@ -9836,7 +9836,7 @@ getgenv().elisium = {
         username = "",
     },
 };
-local ELI = getgenv().elisium;
+local ELI = getgenv().arise;
 
 local spoof_old = {
     level = local_player:GetAttribute("Level") ,
@@ -10135,7 +10135,7 @@ do
         if opt.no_postfx then applyPost(inst, true) end;
     end));
 
-    getgenv().elisium_apply_opt = function(kind)
+    getgenv().arise_apply_opt = function(kind)
         if kind == "particles" or kind == "textures" then scanWorkspace();
         elseif kind == "postfx" then scanLighting();
         elseif kind == "shadows" then applyShadows();
@@ -10205,8 +10205,8 @@ do
     local function get_setter()
         return setfflag or set_fflag or (syn and syn.set_fflag) or (getgenv() and getgenv().setfflag);
     end;
-    getgenv().elisium_fflag_preset = FFLAG_PRESET;
-    getgenv().elisium_inject_fflags = function(json_str)
+    getgenv().arise_fflag_preset = FFLAG_PRESET;
+    getgenv().arise_inject_fflags = function(json_str)
         if type(json_str) ~= "string" or json_str:gsub("%s", "") == "" then
             json_str = FFLAG_PRESET;
         end;
@@ -10225,8 +10225,8 @@ do
         local saved = false;
         if writefile then
             pcall(function()
-                if makefolder and isfolder and not isfolder("Elisium") then makefolder("Elisium") end;
-                writefile("Elisium/fflags.json", json_str);
+                if makefolder and isfolder and not isfolder("arise") then makefolder("arise") end;
+                writefile("arise/fflags.json", json_str);
                 saved = true;
             end);
         end;
@@ -10294,7 +10294,7 @@ local texture_id = {
     ["ray3"] = "rbxassetid://16892384522",
 };
 
-getgenv().elisium_materials = {
+getgenv().arise_materials = {
     presets = {
         ["Neon"]       = { material = Enum.Material.Neon },
         ["ForceField"] = { material = Enum.Material.ForceField },
@@ -10413,7 +10413,7 @@ end)))
 
 do
     local motion_blur = Instance.new("BlurEffect");
-    motion_blur.Name = "elisium_motion_blur";
+    motion_blur.Name = "arise_motion_blur";
     motion_blur.Size = 0;
     motion_blur.Enabled = false;
     motion_blur.Parent = lighting;
@@ -10539,7 +10539,7 @@ local device_map = {
 local G2L = {};
 
 G2L["1"] = Instance.new("ScreenGui");
-G2L["1"]["Name"] = "elisiumdatargethud";
+G2L["1"]["Name"] = "arisedatargethud";
 G2L["1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Global;
 G2L["1"]["DisplayOrder"] = 998;
 G2L["1"]["ResetOnSpawn"] = false;
@@ -11542,14 +11542,14 @@ players.PlayerRemoving:Connect(function(player)
 	esp.remove(player);
 end);
 
-local elisium_state = { esp_hidden = false, vm_chams_last = 0 };
+local arise_state = { esp_hidden = false, vm_chams_last = 0 };
 
 trove:Add(run_service.RenderStepped:Connect(LPH_NO_VIRTUALIZE(function()
 	tickval = tick();
 
 	if not ELI.esp.enable then
-		if not elisium_state.esp_hidden then
-			elisium_state.esp_hidden = true;
+		if not arise_state.esp_hidden then
+			arise_state.esp_hidden = true;
 			for _, player in players:GetPlayers() do
 				if player ~= local_player then esp.hide(player) end;
 			end;
@@ -11557,7 +11557,7 @@ trove:Add(run_service.RenderStepped:Connect(LPH_NO_VIRTUALIZE(function()
 		return
 	end;
 
-	elisium_state.esp_hidden = false;
+	arise_state.esp_hidden = false;
 	for _, player in players:GetPlayers() do
 		if player ~= local_player then esp.update(player) end;
 	end;
@@ -11569,21 +11569,21 @@ trove:Add(function()
 end)
 
 do
-    elisium_state.dmgCallbacks = {};
-    elisium_state.dmgQueue = {};
-    elisium_state.onDamage = function(fn) elisium_state.dmgCallbacks[#elisium_state.dmgCallbacks + 1] = fn end;
-    elisium_state.fireDamage = function(plr, amount, worldpos)
-        local q = elisium_state.dmgQueue;
+    arise_state.dmgCallbacks = {};
+    arise_state.dmgQueue = {};
+    arise_state.onDamage = function(fn) arise_state.dmgCallbacks[#arise_state.dmgCallbacks + 1] = fn end;
+    arise_state.fireDamage = function(plr, amount, worldpos)
+        local q = arise_state.dmgQueue;
         q[#q + 1] = { plr, amount, worldpos };
     end;
     trove:Add(run_service.Heartbeat:Connect(LPH_NO_VIRTUALIZE(function()
-        local q = elisium_state.dmgQueue;
+        local q = arise_state.dmgQueue;
         local n = #q;
         if n == 0 then return end;
-        elisium_state.dmgQueue = {};
+        arise_state.dmgQueue = {};
         for i = 1, n do
             local d = q[i];
-            for _, cb in ipairs(elisium_state.dmgCallbacks) do
+            for _, cb in ipairs(arise_state.dmgCallbacks) do
                 pcall(cb, d[1], d[2], d[3]);
             end;
         end;
@@ -11604,7 +11604,7 @@ do
         local ok, f = pcall(function() return Enum.Font[name] end);
         return (ok and f) or Enum.Font.GothamBold;
     end;
-    elisium_state.onDamage(function(plr, amount, worldpos)
+    arise_state.onDamage(function(plr, amount, worldpos)
         local cfg = ELI.damage_numbers;
         if not cfg.enable or not worldpos then return end;
         local sp, onscreen = camera:WorldToViewportPoint(worldpos);
@@ -12138,8 +12138,8 @@ local old_tracer = tracer_effect.Play; tracer_effect.Play = function(...)
     local args = {...};
     if ELI.silent_aim.visualize and ELI.silent_aim.enable
         and args[2] and args[2].IsLocal and args[2].RaycastResults then
-        local st = elisium_state.silentTarget;
-        if st and (tick() - (elisium_state.silentTargetT or 0)) < 0.2 then
+        local st = arise_state.silentTarget;
+        if st and (tick() - (arise_state.silentTargetT or 0)) < 0.2 then
             for _, v in next, args[2].RaycastResults do
                 pcall(function() v.Position = st end);
             end;
@@ -12471,7 +12471,7 @@ trove:Add(run_service.Heartbeat:Connect(LPH_NO_VIRTUALIZE(function()
 end)))
 
 do
-local vm_material_presets = getgenv().elisium_materials.presets;
+local vm_material_presets = getgenv().arise_materials.presets;
 
 local vm_arm_keywords = { "arm", "hand", "sleeve", "elbow", "wrist", "shoulder", "finger", "thumb", "glove" };
 
@@ -12582,7 +12582,7 @@ local function vm_set_highlight(part, hl_cfg)
     local hl = vm_highlights[part];
     if not hl or not hl.Parent then
         hl = Instance.new("Highlight");
-        hl.Name = "elisium_vm_highlight";
+        hl.Name = "arise_vm_highlight";
         hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop;
         hl.Adornee = part;
         hl.Parent = part;
@@ -12609,8 +12609,8 @@ trove:Add(run_service.Heartbeat:Connect(LPH_NO_VIRTUALIZE(function()
     end;
 
     local now = tick();
-    if now - elisium_state.vm_chams_last < 0.1 then return end;
-    elisium_state.vm_chams_last = now;
+    if now - arise_state.vm_chams_last < 0.1 then return end;
+    arise_state.vm_chams_last = now;
 
     for _, part in next, first_person:GetDescendants() do
         if part:IsA("BasePart") and vm_visible(part) then
@@ -13462,12 +13462,12 @@ local replicate_from_server = local_fighter.ReplicateFromServer; local_fighter.R
             end);
         end;
 
-        if elisium_state.fireDamage and ELI.damage_numbers.enable then
+        if arise_state.fireDamage and ELI.damage_numbers.enable then
             local hp = players:GetPlayerFromCharacter(hit_character);
             local ok, pos = pcall(function()
                 return hit_root.Position + Vector3.new(0, is_headshot and 2.6 or 2.1, 0);
             end);
-            elisium_state.fireDamage(hp, hit_damage, ok and pos or nil);
+            arise_state.fireDamage(hp, hit_damage, ok and pos or nil);
         end;
 
         if ELI.damage_numbers.enable or ELI.damage_numbers.remove_ingame then
@@ -13584,8 +13584,8 @@ local old_raycast = utility.Raycast; utility.Raycast = LPH_NO_VIRTUALIZE(functio
                     target_pos = aim_part and aim_part.Position;
                 end;
                 if target_pos then
-                    elisium_state.silentTarget = target_pos;
-                    elisium_state.silentTargetT = tick();
+                    arise_state.silentTarget = target_pos;
+                    arise_state.silentTargetT = tick();
                     local args = {...};
                     args[3] = target_pos;
                     return old_raycast(table.unpack(args));
@@ -14771,7 +14771,7 @@ end
 
 do
     local opt_tab = Tabs.optimizations;
-    local function apply(kind) pcall(function() getgenv().elisium_apply_opt(kind) end) end;
+    local function apply(kind) pcall(function() getgenv().arise_apply_opt(kind) end) end;
 
     local boost_box = opt_tab:AddLeftGroupbox('fps boost');
 
@@ -14870,7 +14870,7 @@ do
 
     ff_box:AddLabel('how to use', false);
     ff_box:AddLabel('1 tap "inject fps boost fflags"', true);
-    ff_box:AddLabel('2 it applies live if your executor supports it and always saves them to the elisium fflags file', true);
+    ff_box:AddLabel('2 it applies live if your executor supports it and always saves them to the arise fflags file', true);
     ff_box:AddLabel('3 if it only saved, open your executor fastflags editor and import that file (or paste it in)', true);
     ff_box:AddLabel('4 fully close and rejoin roblox to apply', true);
     ff_box:AddLabel('this unlocks fps past 60 and forces low graphics for a big fps gain, paste your own flags in the box for custom ones', true);
@@ -14902,7 +14902,7 @@ do
             macsploit = 'open the macsploit menu > settings > fastflags, paste the json',
             arceus = 'open menu > settings > fastflags, paste or import the json',
         };
-        local base = 'open its settings > fastflags editor, paste or import the elisium fflags file then save';
+        local base = 'open its settings > fastflags editor, paste or import the arise fflags file then save';
 
         local matched;
         for _, k in eli_ipairs(known) do
@@ -14914,7 +14914,7 @@ do
 
         local guide;
         if name == '' then
-            guide = 'could not auto detect your executor, open its fastflags or config editor, import the elisium fflags file then fully rejoin roblox';
+            guide = 'could not auto detect your executor, open its fastflags or config editor, import the arise fflags file then fully rejoin roblox';
         else
             local steps = (matched and overrides[matched]) or base;
             guide = 'detected ' .. string.lower(name) .. ', ' .. steps .. ' then fully rejoin roblox';
@@ -14923,7 +14923,7 @@ do
     end;
 
     local function do_inject(json)
-        local injector = getgenv().elisium_inject_fflags;
+        local injector = getgenv().arise_inject_fflags;
         if not injector then
             Library:Notify('fflags injector not ready', 4);
             return
@@ -14936,7 +14936,7 @@ do
         if res.live and res.applied > 0 then
             Library:Notify(string.format('fflags applied %d/%d live - rejoin to fully apply', res.applied, res.total), 6);
         elseif res.saved then
-            Library:Notify('fflags saved to Elisium/fflags.json - import in your executor & rejoin', 7);
+            Library:Notify('fflags saved to arise/fflags.json - import in your executor & rejoin', 7);
         else
             Library:Notify('your executor cannot set fflags from a script', 5);
         end;
@@ -14963,10 +14963,10 @@ do
             return
         end;
         pcall(function()
-            if makefolder and isfolder and not isfolder('Elisium') then makefolder('Elisium') end;
-            writefile('Elisium/fflags.json', getgenv().elisium_fflag_preset or '{}');
+            if makefolder and isfolder and not isfolder('arise') then makefolder('arise') end;
+            writefile('arise/fflags.json', getgenv().arise_fflag_preset or '{}');
         end);
-        Library:Notify('saved preset to Elisium/fflags.json', 5);
+        Library:Notify('saved preset to arise/fflags.json', 5);
     end);
 end;
 
@@ -14975,7 +14975,7 @@ local visuals_tab = Tabs.visualstab; do
     local viewmodel_thing = visuals_tab:AddLeftTabbox(); do
         local viewmodel_tab = viewmodel_thing:AddTab('viewmodel'); do
 
-            local vm_material_names = getgenv().elisium_materials.names;
+            local vm_material_names = getgenv().arise_materials.names;
 
             local function build_vm_chams_section(tab, key, chams_label, is_arms)
                 local prefix = 'vm_' .. key;
@@ -16407,14 +16407,14 @@ local world_tab = Tabs.worldtab; do
     end;
 
     local shader_blur = Instance.new('BlurEffect');
-    shader_blur.Name = 'elisium_blur';
+    shader_blur.Name = 'arise_blur';
     shader_blur.Enabled = false;
     shader_blur.Size = 12;
     shader_blur.Parent = lighting;
     trove:Add(shader_blur);
 
     local shader_bloom = Instance.new('BloomEffect');
-    shader_bloom.Name = 'elisium_bloom';
+    shader_bloom.Name = 'arise_bloom';
     shader_bloom.Enabled = false;
     shader_bloom.Intensity = 1;
     shader_bloom.Size = 24;
@@ -16423,7 +16423,7 @@ local world_tab = Tabs.worldtab; do
     trove:Add(shader_bloom);
 
     local shader_dof = Instance.new('DepthOfFieldEffect');
-    shader_dof.Name = 'elisium_dof';
+    shader_dof.Name = 'arise_dof';
     shader_dof.Enabled = false;
     shader_dof.FocusDistance = 25;
     shader_dof.InFocusRadius = 10;
@@ -16433,7 +16433,7 @@ local world_tab = Tabs.worldtab; do
     trove:Add(shader_dof);
 
     local shader_sunrays = Instance.new('SunRaysEffect');
-    shader_sunrays.Name = 'elisium_sunrays';
+    shader_sunrays.Name = 'arise_sunrays';
     shader_sunrays.Enabled = false;
     shader_sunrays.Intensity = 0.25;
     shader_sunrays.Spread = 1;
@@ -16441,7 +16441,7 @@ local world_tab = Tabs.worldtab; do
     trove:Add(shader_sunrays);
 
     local shader_cc = Instance.new('ColorCorrectionEffect');
-    shader_cc.Name = 'elisium_cc';
+    shader_cc.Name = 'arise_cc';
     shader_cc.Enabled = false;
     shader_cc.Saturation = 0;
     shader_cc.Contrast = 0;
@@ -17574,7 +17574,7 @@ end
 do
 local v555 = Tabs.misc_tab:AddRightGroupbox('cosmetics');
 local unlockAllInitialized = false;
-getgenv().elisium_cosmetic_state = getgenv().elisium_cosmetic_state or {
+getgenv().arise_cosmetic_state = getgenv().arise_cosmetic_state or {
     gui = nil,
     frame = nil,
     inner = nil,
@@ -17587,10 +17587,10 @@ getgenv().elisium_cosmetic_state = getgenv().elisium_cosmetic_state or {
 
 v555:AddToggle("AnySkinMode", {
     Text = "any skin",
-    Default = getgenv().elisium_cosmetic_state.anyModel or false,
+    Default = getgenv().arise_cosmetic_state.anyModel or false,
     Callback = function(val)
-        getgenv().elisium_cosmetic_state.anyModel = val and true or false;
-        local st = getgenv().elisium_cosmetic_state;
+        getgenv().arise_cosmetic_state.anyModel = val and true or false;
+        local st = getgenv().arise_cosmetic_state;
         if st and st.refreshCosmetics then
             st.refreshCosmetics();
         end;
@@ -17598,7 +17598,7 @@ v555:AddToggle("AnySkinMode", {
 });
 
 local function syncCosmeticChangerVisibility()
-    local st = getgenv().elisium_cosmetic_state;
+    local st = getgenv().arise_cosmetic_state;
     if not st or not st.frame or not st.frame.Parent then return end;
     if not unlockAllInitialized then return end;
     local menuOpen = false;
@@ -17617,7 +17617,7 @@ local function openCosmeticChanger(showUi)
     if showUi == nil then showUi = true end;
     if unlockAllInitialized then
         if showUi then
-            local st = getgenv().elisium_cosmetic_state;
+            local st = getgenv().arise_cosmetic_state;
             if st then
                 st.dismissedThisSession = false;
             end;
@@ -17683,7 +17683,7 @@ local function openCosmeticChanger(showUi)
         end;
         return new_data;
     end;
-    local SKINS_FOLDER = "elisium_skins";
+    local SKINS_FOLDER = "arise_skins";
     local SKINS_FILE = SKINS_FOLDER .. "/skins.json";
     local http_service = game:GetService("HttpService");
     local has_fs = isfolder and makefolder and writefile and readfile and isfile;
@@ -17918,7 +17918,7 @@ local function openCosmeticChanger(showUi)
     data_ctrl.CurrentData:Replicate("CosmeticInventory");
     data_ctrl.CurrentData:Replicate("WeaponInventory");
     data_ctrl.CurrentData:Replicate("FavoritedCosmetics");
-    local uiState = getgenv().elisium_cosmetic_state;
+    local uiState = getgenv().arise_cosmetic_state;
     local function makeThemeColor(which, fallback)
         if Library and Library[which] then return Library[which] end;
         return fallback;
@@ -17937,7 +17937,7 @@ local function openCosmeticChanger(showUi)
     end;
     destroyOld();
     local gui = Instance.new("ScreenGui");
-    gui.Name = "elisium_cosmetic_changer";
+    gui.Name = "arise_cosmetic_changer";
     gui.ResetOnSpawn = false;
     gui.ZIndexBehavior = Enum.ZIndexBehavior.Global;
     gui.Parent = coreGui;
@@ -18045,7 +18045,7 @@ local function openCosmeticChanger(showUi)
     closeBtn.BackgroundTransparency = 1;
     closeBtn.Parent = top;
     closeBtn.MouseButton1Click:Connect(function()
-        local st = getgenv().elisium_cosmetic_state;
+        local st = getgenv().arise_cosmetic_state;
         if st then
             st.dismissedThisSession = true;
             if st.frame then
@@ -18379,7 +18379,7 @@ local function openCosmeticChanger(showUi)
         local weaponNorm = cosmeticNorm(weaponName);
         local seededList = weaponSkinSeed[weaponNorm];
         local function matchesWeapon(cdata)
-            local st = getgenv().elisium_cosmetic_state;
+            local st = getgenv().arise_cosmetic_state;
             if st and st.anyModel then
                 return true;
             end;
@@ -19035,7 +19035,7 @@ local function openCosmeticChanger(showUi)
         end;
     end;
     applyCosmeticUiTheme();
-    getgenv().elisium_apply_cosmetic_theme = applyCosmeticUiTheme;
+    getgenv().arise_apply_cosmetic_theme = applyCosmeticUiTheme;
 end;
 
 v555:AddButton("cosmetic changer", function()
@@ -19300,8 +19300,8 @@ end)()
 
 ;(function()
     local cfg = ELI;
-    local material_presets = getgenv().elisium_materials.presets;
-    local material_preset_names = getgenv().elisium_materials.names;
+    local material_presets = getgenv().arise_materials.presets;
+    local material_preset_names = getgenv().arise_materials.names;
     local enhance_box = Tabs.visualstab:AddLeftTabbox();
     local chams_tab = enhance_box:AddTab("chams");
     local crosshair_tab = Tabs.visualstab:AddRightTabbox();
@@ -19347,7 +19347,7 @@ end)()
         local hl = highlights[plr];
         if not hl or not hl.Parent then
             hl = Instance.new("Highlight");
-            hl.Name = "elisium_chams";
+            hl.Name = "arise_chams";
             hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop;
             highlights[plr] = hl;
             hl.Parent = char;
@@ -19563,7 +19563,7 @@ end)()
     ch_dot.Visible = false;
 
     local ch_text_gui = Instance.new("ScreenGui");
-    ch_text_gui.Name = "elisium_crosshair_text";
+    ch_text_gui.Name = "arise_crosshair_text";
     ch_text_gui.ResetOnSpawn = false;
     ch_text_gui.IgnoreGuiInset = true;
     ch_text_gui.DisplayOrder = 999;
@@ -20110,7 +20110,7 @@ end)()
 
         text_box:AddInput("CrosshairTextContent", {
             Text = "content",
-            Default = "elisium",
+            Default = "arise",
             ClearTextOnFocus = false,
             Callback = function(v)
                 cfg.crosshair.text_content = v;
@@ -20877,13 +20877,13 @@ ThemeManager:SetLibrary(Library);
 SaveManager:SetLibrary(Library);
 SaveManager:IgnoreThemeSettings();
 SaveManager:SetIgnoreIndexes({ 'MenuKeybind' });
-ThemeManager:SetFolder('elisium');
-SaveManager:SetFolder('elisium/rivals');
+ThemeManager:SetFolder('arise');
+SaveManager:SetFolder('arise/rivals');
 SaveManager:BuildConfigSection(Tabs['UI Settings'])
 
 ;(function()
     local lua_tab = Tabs.lua;
-    local base_folder = SaveManager.Folder or 'elisium/rivals';
+    local base_folder = SaveManager.Folder or 'arise/rivals';
     local lua_folder = base_folder .. '/luas';
     pcall(function()
         if makefolder and isfolder then
@@ -21133,7 +21133,7 @@ end)()
         detach(AppearanceWidget);
     end);
 
-    getgenv().elisium_widgets = {
+    getgenv().arise_widgets = {
         Radar = RadarWidget,
         PlayerList = PlayerWidget,
         Velocity = VelocityWidget,
@@ -21174,36 +21174,36 @@ end)()
         wmbox:AddToggle('WatermarkFps', {
             Text = 'show fps'; Default = true;
             Callback = function(v)
-                getgenv().elisium_wm = getgenv().elisium_wm or {};
-                getgenv().elisium_wm.fps = v;
+                getgenv().arise_wm = getgenv().arise_wm or {};
+                getgenv().arise_wm.fps = v;
             end;
         });
         wmbox:AddToggle('WatermarkPing', {
             Text = 'show ping'; Default = true;
             Callback = function(v)
-                getgenv().elisium_wm = getgenv().elisium_wm or {};
-                getgenv().elisium_wm.ping = v;
+                getgenv().arise_wm = getgenv().arise_wm or {};
+                getgenv().arise_wm.ping = v;
             end;
         });
         wmbox:AddToggle('WatermarkTime', {
             Text = 'show time'; Default = true;
             Callback = function(v)
-                getgenv().elisium_wm = getgenv().elisium_wm or {};
-                getgenv().elisium_wm.time = v;
+                getgenv().arise_wm = getgenv().arise_wm or {};
+                getgenv().arise_wm.time = v;
             end;
         });
         wmbox:AddToggle('WatermarkExecutor', {
             Text = 'show executor'; Default = false;
             Callback = function(v)
-                getgenv().elisium_wm = getgenv().elisium_wm or {};
-                getgenv().elisium_wm.executor = v;
+                getgenv().arise_wm = getgenv().arise_wm or {};
+                getgenv().arise_wm.executor = v;
             end;
         });
     end);
 
     pcall(function()
         local toggleGui = Instance.new('ScreenGui');
-        toggleGui.Name = 'elisium_toggle';
+        toggleGui.Name = 'arise_toggle';
         toggleGui.ResetOnSpawn = false;
         toggleGui.ZIndexBehavior = Enum.ZIndexBehavior.Global;
         toggleGui.DisplayOrder = 100000;
@@ -21216,7 +21216,7 @@ end)()
         if not parented then
             pcall(function() toggleGui.Parent = cloneref(game:GetService('CoreGui')); end);
         end;
-        getgenv().elisium_toggle_gui = toggleGui;
+        getgenv().arise_toggle_gui = toggleGui;
         local btn = Library:Create('TextButton', {
             Name = 'ElisiumMobileToggle';
             Size = UDim2.fromOffset(92, 24);
@@ -21225,7 +21225,7 @@ end)()
             BorderColor3 = Library.OutlineColor;
             BorderSizePixel = 1;
             AutoButtonColor = false;
-            Text = 'Elisium';
+            Text = 'Arise';
             TextColor3 = Library.FontColor;
             TextSize = 14;
             ZIndex = 5000;
